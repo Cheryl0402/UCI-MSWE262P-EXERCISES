@@ -1,7 +1,10 @@
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ReadJar {
     public static void main(String[] args){
@@ -28,5 +31,19 @@ public class ReadJar {
             JarEntry entry = e.nextElement();
             System.out.println(entry.getName());
         }
+    }
+
+    private static List<String> findAllClassesInJar2(JarFile jar) {
+        Stream<JarEntry> stream = jar.stream();
+
+        return stream
+                .filter(entry -> entry.getName().endsWith(".class"))
+                .map(entry -> getFQN(entry.getName()))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    private static String getFQN(String resourceName) {
+        return resourceName.replaceAll("/", ".").substring(0, resourceName.lastIndexOf('.'));
     }
 }
