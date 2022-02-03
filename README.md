@@ -1,1 +1,2 @@
-# UCI-MSWE262P-EXERCISES
+# EXERCISES
+Exercises of UCI-MSWE262P-Programming-Style class
